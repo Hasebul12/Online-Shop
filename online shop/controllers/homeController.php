@@ -1,0 +1,59 @@
+<?php
+session_start();
+require_once('../Models/alldb.php');
+if(isset($_GET['delete']))
+{
+    $carid=$_GET['delete'];
+    $status=delete($carid);
+    if($status)
+    {
+    $_SESSION['mes']="Deleted";
+    header("location:../Views/home.php");
+    }
+}
+if(isset($_GET['edit']))
+{
+    $carid=$_GET['edit'];
+    $status=edit($carid);
+    if($status)
+
+     {
+        header("location:../Views/edit.php?carid=$carid");
+    }
+}
+if(isset($_POST['insert']))
+{
+    $carid=$_POST['carid'];
+    $model=$_POST['model'];
+    $company=$_POST['company'];
+    $price=$_POST['price'];
+    $status=add1($carid,$model,$company,$price);
+    if($status)
+    {
+        header("location:../Views/home.php");
+        $_SESSION['succ']="Inserted";
+    }
+    else
+    {
+         header("location:../Views/home.php");
+        $_SESSION['succ']="Not Inserted";
+    }
+}
+if(isset($_POST['editbtn']))
+{
+    $carid=$_POST['carid'];
+    $model=$_POST['model'];
+    $company=$_POST['company'];
+    $price=$_POST['price'];
+    $status=update1($carid,$model,$company,$price);
+    if($status)
+    {
+        header("location:../Views/home.php");
+    }
+    else
+    {
+         header("location:../Views/edit.php");
+    }
+}
+
+?>
